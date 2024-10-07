@@ -487,8 +487,7 @@ const deleteReview = async (req, res) => {
 
 const propertyBySlug = asyncHandler(
   async (req, res, next) => {
-    console.log("Received slug:", req.params.slug);
-    const property = await Property.findOne({ slug: { $regex: ".*" + req.params.slug + ".*", $options: "i" } });
+    const property = await Property.findOne({ slug: req.params.slug });
     if (!property) {
       return next(new ApiError(400, "Property not found"));
     }
