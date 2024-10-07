@@ -1,4 +1,5 @@
 const express = require("express");
+
 const {
   addProperty,
   GetProperty,
@@ -9,8 +10,11 @@ const {
   addReview,
   deleteReview,
   propertyBySlug,
+  getPropertiesByLocation
 } = require("../controllers/propertyController.js");
+
 const upload = require("../middlewares/multer.js");
+
 const authenticate = require("../middlewares/authMiddleware.js");
 
 const router = express.Router();
@@ -25,8 +29,9 @@ router.route("/add-property").post(
   ]),
   addProperty
 ); //change names and methods according to your endpoints
-
 //eg.
+
+router.route("/location/:location").get(getPropertiesByLocation);
 
 router.route("/filter").get(getFilteredProperties);
 
