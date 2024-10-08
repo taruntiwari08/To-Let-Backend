@@ -8,7 +8,6 @@ const PropertySchema = new Schema({
     ref: "User",
     required: true,
   },
-
   firstName: {
     type: String,
     required: true,
@@ -23,6 +22,15 @@ const PropertySchema = new Schema({
   },
   ownersAlternateContactNumber: {
     type: String,
+  },
+
+  pincode: {
+    type: Number,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
   },
   locality: {
     type: String,
@@ -39,19 +47,7 @@ const PropertySchema = new Schema({
   },
   propertyType: {
     type: String,
-    enum: ["House", "Flat", "PG", "Office", "Shop"],
-    required: true,
-  },
-  currentResidenceOfOwner: {
-    type: String,
-    enum: ["Same City", "Same Place", "Different City"],
-  },
-  rent: {
-    type: Number,
-    required: true,
-  },
-  concession: {
-    type: Boolean,
+    enum: ["House", "Flat", "PG", "Office", "Shop", "Warehouse"],
     required: true,
   },
   petsAllowed: {
@@ -98,6 +94,7 @@ const PropertySchema = new Schema({
     type: Boolean,
     required: true,
   },
+
   rent: {
     type: Number,
     required: true,
@@ -107,14 +104,16 @@ const PropertySchema = new Schema({
     required: true,
   },
 
-  squareFeetArea: {
-    type: Number,
-    required: true,
-  },
   images: {
     type: [String],
     required: true,
   },
+
+  squareFeetArea: {
+    type: Number,
+    required: true,
+  },
+
   appliances: {
     type: [String],
     required: true,
@@ -123,6 +122,7 @@ const PropertySchema = new Schema({
     type: [String],
     required: true,
   },
+
   aboutTheProperty: {
     type: String,
     required: true,
@@ -133,12 +133,11 @@ const PropertySchema = new Schema({
   },
   locationLink: {
     type: String,
-    required: true,
+    // required: true,
   },
   slug: {
     type: String,
     unique: true,
-    required: true,
   },
   createdAt: {
     type: Date,
@@ -161,7 +160,7 @@ PropertySchema.pre("save", function (next) {
   ) {
     // Generate the slug using locality, propertyType, and bhk
     this.slug = slugify(
-      `${this.locality} ${this.propertyType} ${this.bhk}BHK ${this._id}`,
+      `${this.city} ${this.locality} ${this.propertyType} ${this.bhk}BHK ${this._id}`,
       {
         lower: true, // Lowercase slug
         strict: true, // Remove special characters
