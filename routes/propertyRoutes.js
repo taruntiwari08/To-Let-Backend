@@ -12,6 +12,7 @@ const {
   propertyBySlug,
   getPropertiesByLocation,
   getPropertyByCity,
+  getPropertiesByUserId,
 } = require("../controllers/propertyController.js");
 
 const upload = require("../middlewares/multer.js");
@@ -25,7 +26,11 @@ router.route("/add-property").post(
   upload.fields([
     {
       name: "images",
-      maxCount: 5, // max count
+      maxCount: 10, // max count
+    },
+    {
+      name: "videos",
+      maxCount: 5   // max count
     },
   ]),
   addProperty
@@ -33,6 +38,8 @@ router.route("/add-property").post(
 //eg.
 
 router.route("/location/:location").get(getPropertiesByLocation);
+
+router.route("/user/:userId").get(getPropertiesByUserId);
 
 router.route("/filter").get(getFilteredProperties);
 
